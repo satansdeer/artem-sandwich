@@ -1,24 +1,30 @@
-import logo from './logo.svg';
-import './App.css';
+import { useState } from "react";
+import { SandwichForm } from "./SandwichForm";
+import { SandwichPreview } from "./SandwichPreview";
+
+// const sandwich = {
+//   bread: "dark",
+//   sauces: ["mayo", "ketchup", "mustard"],
+//   toppings: ["bacon", "lettuce", "cheddar"],
+// };
 
 function App() {
+  const [sandwich, setSandwich] = useState();
+
+  if (sandwich) {
+    return (
+      <>
+        <h1>Ваш сендвич:</h1>
+        <SandwichPreview sandwich={sandwich} />
+      </>
+    );
+  }
+
   return (
-    <div className="App">
-      <header className="App-header">
-        <img src={logo} className="App-logo" alt="logo" />
-        <p>
-          Edit <code>src/App.js</code> and save to reload.
-        </p>
-        <a
-          className="App-link"
-          href="https://reactjs.org"
-          target="_blank"
-          rel="noopener noreferrer"
-        >
-          Learn React
-        </a>
-      </header>
-    </div>
+    <>
+      <h1>Соберите сендвич</h1>
+      <SandwichForm onSandwichSubmit={setSandwich} />
+    </>
   );
 }
 

@@ -1,12 +1,12 @@
 import { useState } from "react";
 import { calculatePrice } from "./calculatePrice";
 import { BREAD, SAUCES, TOPPINGS } from "./sandwichData";
-import { useArray } from "./useArray";
+import { useCollection } from "./useCollection";
 
 export const SandwichForm = ({ onSandwichSubmit }) => {
   const [bread, setBread] = useState("dark");
-  const [sauces, addSauce, removeSauce] = useArray([]);
-  const [toppings, addTopping, removeTopping] = useArray([]);
+  const [sauces, addSauce, removeSauce] = useCollection([]);
+  const [toppings, addTopping, removeTopping] = useCollection([]);
 
   const price = calculatePrice({ bread, sauces, toppings });
 

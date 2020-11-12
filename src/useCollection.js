@@ -1,6 +1,6 @@
 import { useState } from "react";
 
-export const useArray = (defaultState) => {
+export const useCollection = (defaultState) => {
   const [state, setState] = useState(defaultState || []);
 
   const addItem = (itemToAdd) => {

@@ -1,5 +1,5 @@
-import { calculatePrice } from "./calculatePrice";
-import { BREAD, SAUCES, TOPPINGS } from "./sandwichData";
+import { calculatePrice } from "../utils/calculatePrice";
+import { BREAD, SAUCES, TOPPINGS } from "../utils/sandwichData";
 
 export const SandwichPreview = ({ sandwich }) => {
   return (

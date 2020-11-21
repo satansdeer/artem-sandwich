@@ -1,29 +1,40 @@
-import { useState } from "react";
-import { SandwichForm } from "./SandwichForm";
-import { SandwichPreview } from "./SandwichPreview";
-
-// const sandwich = {
-//   bread: "dark",
-//   sauces: ["mayo", "ketchup", "mustard"],
-//   toppings: ["bacon", "lettuce", "cheddar"],
-// };
+import { Link, Route, Switch } from "react-router-dom";
+import { CheckoutPage } from "./CheckoutPage";
+import { NotFoundPage } from "./NotFoundPage";
+import { SandwichBuilderPage } from "./SandwichBuilderPage";
+import { SandwichPreviewPage } from "./SandwichPreviewPage";
 
 function App() {
-  const [sandwich, setSandwich] = useState();
-
-  if (sandwich) {
-    return (
-      <>
-        <h1>Ваш сендвич:</h1>
-        <SandwichPreview sandwich={sandwich} />
-      </>
-    );
-  }
-
   return (
     <>
-      <h1>Соберите сендвич</h1>
-      <SandwichForm onSandwichSubmit={setSandwich} />
+      <nav>
+        <ul>
+          <li>
+            <Link to="/">Главная</Link>
+          </li>
+          <li>
+            <Link to="/sandwich-preview">Превью бутерброда</Link>
+          </li>
+          <li>
+            <Link to="/checkout">Оплата бутерброда</Link>
+          </li>
+        </ul>
+      </nav>
+
+      <Switch>
+        <Route exact path="/">
+          <SandwichBuilderPage />
+        </Route>
+        <Route path="/sandwich-preview">
+          <SandwichPreviewPage />
+        </Route>
+        <Route path="/checkout">
+          <CheckoutPage />
+        </Route>
+        <Route>
+          <NotFoundPage />
+        </Route>
+      </Switch>
     </>
   );
 }

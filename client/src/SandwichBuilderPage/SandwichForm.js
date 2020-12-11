@@ -1,8 +1,8 @@
 import React from 'react'
-import { useState } from "react";
 import { useForm } from 'react-hook-form';
 import { calculatePrice } from "../utils/calculatePrice";
 import { BREAD, SAUCES, TOPPINGS } from "../utils/sandwichData";
+import { RadioGroup } from './RadioGroup';
 
 export const SandwichForm = ({ onSandwichSubmit }) => {
   const {register, handleSubmit, watch} = useForm({
@@ -24,24 +24,10 @@ export const SandwichForm = ({ onSandwichSubmit }) => {
     <form onSubmit={handleSubmit(onSubmit)}>
       <fieldset>
         <legend>Выберите хлеб:</legend>
-        <label>
-          <input
-            ref={register}
-            type="radio"
-            value="dark"
-            name="bread"
-          />
-          {BREAD.dark.name}
-        </label>
-        <label>
-          <input
-            ref={register}
-            type="radio"
-            value="white"
-            name="bread"
-          />
-          {BREAD.white.name}
-        </label>
+        <RadioGroup register={register} name="bread" items={[
+          { value: 'dark', label: BREAD['dark'].name },
+          { value: 'white', label: BREAD['white'].name }
+        ]} />
       </fieldset>
       <fieldset>
         <legend>Выберите соусы:</legend>

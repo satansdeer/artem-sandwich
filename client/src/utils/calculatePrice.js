@@ -1,6 +1,6 @@
 import { BREAD, SAUCES, TOPPINGS } from "./sandwichData";
 
-export function calculatePrice({ bread, sauces, toppings }) {
+export function calculatePrice({ bread, sauces, toppings }, prices) {
   const breadPrice = BREAD[bread].price;
   const saucesPrice = sauces.reduce(
     (price, sauce) => price + SAUCES[sauce].price,

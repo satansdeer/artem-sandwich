@@ -1,37 +1,38 @@
 import { useEffect } from "react";
 import { useHistory } from "react-router-dom";
 import { useIngredients } from "../contexts/IngredientsContext";
-import { useSandwich } from "../contexts/SandwichContext";
 import { SandwichForm } from "./SandwichForm";
+import { useDispatch, useSelector } from 'react-redux'
+import { setSandwich } from "../state/sandwich/actions";
+import { fetchIngredients } from "../state/ingredients/thunk";
+import { getIngredientsByCategory, getIsLoading } from "../state/ingredients/selectors";
+import { getIngredients } from "../api";
 
-export const SandwichBuilderPage = ({
-  _useSandwichHook = useSandwich,
-  _useIngredientsHook = useIngredients,
-}) => {
-  const { setSandwich } = _useSandwichHook();
-  const {
-    fetchIngredients,
-    ingredientsByCategory,
-    isLoading,
-  } = _useIngredientsHook();
+export const SandwichBuilderPage = () => {
   const history = useHistory();
+  const dispatch = useDispatch()
+
+  const isLoading = useSelector(getIsLoading)
+
+  const state = useSelector(state => state)
+  const sauces = useSelector(getIngredientsByCategory("sauces"));
+  const meats = useSelector(getIngredientsByCategory("meat"));
+  const vegetables = useSelector(getIngredientsByCategory("vegetables"));
+
+  console.log(state, sauces, meats, vegetables)
 
   const onSandwichChange = (sandwich) => {
-    setSandwich(sandwich);
+    dispatch(setSandwich(sandwich))
     history.push("/sandwich-preview");
   };
 
   useEffect(() => {
-    fetchIngredients();
+    dispatch(fetchIngredients())
   }, []);
 
   if (isLoading) {
     return <>Loading...</>;
   }
-
-  const sauces = ingredientsByCategory("sauces");
-  const meats = ingredientsByCategory("meat");
-  const vegetables = ingredientsByCategory("vegetables");
 
   return (
     <>

@@ -1,0 +1,1 @@
+* [Как проще использовать redux devtools](https://github.com/zalmoxisus/redux-devtools-extension#13-use-redux-devtools-extension-package-from-npm)

@@ -1,0 +1,1 @@
+export const getSandwich = (state) => state.sandwich;

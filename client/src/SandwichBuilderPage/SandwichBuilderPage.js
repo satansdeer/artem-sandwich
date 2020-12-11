@@ -4,13 +4,16 @@ import { useIngredients } from "../contexts/IngredientsContext";
 import { useSandwich } from "../contexts/SandwichContext";
 import { SandwichForm } from "./SandwichForm";
 
-export const SandwichBuilderPage = ({ _useSandwichHook = useSandwich }) => {
+export const SandwichBuilderPage = ({
+  _useSandwichHook = useSandwich,
+  _useIngredientsHook = useIngredients,
+}) => {
   const { setSandwich } = _useSandwichHook();
   const {
     fetchIngredients,
     ingredientsByCategory,
     isLoading,
-  } = useIngredients();
+  } = _useIngredientsHook();
   const history = useHistory();
 
   const onSandwichChange = (sandwich) => {

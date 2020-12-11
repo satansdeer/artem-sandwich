@@ -17,8 +17,6 @@ function App() {
     resolver: yupResolver(schema),
   });
 
-  console.log(errors);
-
   const onSubmit = handleSubmit((data) => {
     console.log(data);
   });

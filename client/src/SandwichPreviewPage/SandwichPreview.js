@@ -1,7 +1,14 @@
+import { IngredientsProvider } from "../contexts/IngredientsContext";
 import { calculatePrice } from "../utils/calculatePrice";
-import { BREAD, SAUCES, TOPPINGS } from "../utils/sandwichData";
+import { BREAD } from "../utils/sandwichData";
 
-export const SandwichPreview = ({ sandwich }) => {
+export const SandwichPreview = ({ sandwich, ingredientsData }) => {
+  const price = calculatePrice(sandwich.bread, [
+    ...sandwich.sauces,
+    ...sandwich.meats,
+    ...sandwich.vegetables,
+  ], ingredientsData);
+
   return (
     <>
       <p>Хлеб: {BREAD[sandwich.bread].name}</p>
@@ -10,9 +17,11 @@ export const SandwichPreview = ({ sandwich }) => {
       </p>
       <p>
         Топпинги:{" "}
-        {sandwich.toppings.map((topping) => TOPPINGS[topping].name).join(", ")}
+        {sandwich.toppings
+          .map((topping) => ingredientsData.find((t) => t).name)
+          .join(", ")}
       </p>
-      <p>Цена: {calculatePrice(sandwich)}</p>
+      <p>Цена: </p>
     </>
   );
 };

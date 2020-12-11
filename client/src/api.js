@@ -1,3 +1,3 @@
 export const getIngredients = async () => {
-  return fetch("http://localhost:4000/ingredients").then((res) => res.json());
+  return fetch(process.env.REACT_APP_BACKEND_HOST).then((res) => res.json());
 };

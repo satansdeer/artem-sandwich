@@ -1,10 +1,10 @@
-export const getIngredients = (state) => state.ingredients;
+export const getIngredients = (state) => state.ingredients.data;
 
 export const getIngredientsByCategory = (category) => (state) => {
-  if(state.ingredients === "loading"){
+  if(state.ingredients.pending){
     return []
   }
-  return state.ingredients.filter((i) => i.category === category);
+  return state.ingredients.data?.filter((i) => i.category === category);
 }
 
-export const getIsLoading = (state) => state.ingredients === "loading";
+export const getIsLoading = (state) => state.ingredients.pending;

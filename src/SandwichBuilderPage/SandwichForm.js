@@ -1,7 +1,8 @@
+import React from 'react'
 import { useState } from "react";
-import { calculatePrice } from "./calculatePrice";
-import { BREAD, SAUCES, TOPPINGS } from "./sandwichData";
-import { useCollection } from "./useCollection";
+import { calculatePrice } from "../utils/calculatePrice";
+import { BREAD, SAUCES, TOPPINGS } from "../utils/sandwichData";
+import { useCollection } from "../utils/useCollection";
 
 export const SandwichForm = ({ onSandwichSubmit }) => {
   const [bread, setBread] = useState("dark");

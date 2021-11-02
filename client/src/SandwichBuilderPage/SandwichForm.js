@@ -1,20 +1,31 @@
-import React from 'react'
-import { useState } from "react";
-import { useForm } from 'react-hook-form';
+import React from "react";
+import { useForm } from "react-hook-form";
 import { calculatePrice } from "../utils/calculatePrice";
-import { BREAD, SAUCES, TOPPINGS } from "../utils/sandwichData";
+import { BREAD } from "../utils/sandwichData";
+import { RadioGroup } from "./RadioGroup";
 
-export const SandwichForm = ({ onSandwichSubmit }) => {
-  const {register, handleSubmit, watch} = useForm({
+export const SandwichForm = ({
+  onSandwichSubmit,
+  sauces,
+  meats,
+  vegetables,
+}) => {
+  const { register, handleSubmit, watch } = useForm({
     defaultValues: {
-      bread: 'dark',
+      bread: "dark",
       sauces: [],
-      toppings: []
-    }
-  })
+      meats: [],
+      vegetables: [],
+    },
+  });
 
-  const values = watch()
-  const price = calculatePrice(values);
+  const values = watch();
+
+  const price = calculatePrice(
+    values.bread,
+    [...values.sauces, ...values.vegetables, ...values.meats],
+    [...sauces, ...meats, ...vegetables]
+  );
 
   const onSubmit = (data) => {
     onSandwichSubmit(data);
@@ -24,84 +35,62 @@ export const SandwichForm = ({ onSandwichSubmit }) => {
     <form onSubmit={handleSubmit(onSubmit)}>
       <fieldset>
         <legend>Выберите хлеб:</legend>
-        <label>
-          <input
-            ref={register}
-            type="radio"
-            value="dark"
-            name="bread"
-          />
-          {BREAD.dark.name}
-        </label>
-        <label>
-          <input
-            ref={register}
-            type="radio"
-            value="white"
-            name="bread"
-          />
-          {BREAD.white.name}
-        </label>
+        <RadioGroup
+          register={register}
+          name="bread"
+          items={[
+            { value: "dark", label: BREAD["dark"].name },
+            { value: "white", label: BREAD["white"].name },
+          ]}
+        />
       </fieldset>
       <fieldset>
         <legend>Выберите соусы:</legend>
-        <label>
-          <input
-            ref={register}
-            type="checkbox"
-            value="mayo"
-            name="sauces"
-          />
-          {SAUCES.mayo.name}
-        </label>
-        <label>
-          <input
-            ref={register}
-            type="checkbox"
-            value="ketchup"
-            name="sauces"
-          />
-          {SAUCES.ketchup.name}
-        </label>
-        <label>
-          <input
-            ref={register}
-            type="checkbox"
-            value="mustard"
-            name="sauces"
-          />
-          {SAUCES.mustard.name}
-        </label>
+        {sauces.map((sauce) => {
+          return (
+            <label key={sauce.id}>
+              <input
+                ref={register}
+                type="checkbox"
+                value={sauce.slug}
+                name="sauces"
+              />
+              {sauce.name}
+            </label>
+          );
+        })}
       </fieldset>
       <fieldset>
-        <legend>Выберите топпинги:</legend>
-        <label>
-          <input
-            ref={register}
-            type="checkbox"
-            value="bacon"
-            name="toppings"
-          />
-          {TOPPINGS.bacon.name}
-        </label>
-        <label>
-          <input
-            ref={register}
-            type="checkbox"
-            value="lettuce"
-            name="toppings"
-          />
-          {TOPPINGS.lettuce.name}
-        </label>
-        <label>
-          <input
-            ref={register}
-            type="checkbox"
-            value="cheddar"
-            name="toppings"
-          />
-          {TOPPINGS.cheddar.name}
-        </label>
+        <legend>Выберите мясо:</legend>
+        {meats.map((meat) => {
+          return (
+            <label key={meat.id}>
+              <input
+                ref={register}
+                type="checkbox"
+                value={meat.slug}
+                name="meats"
+              />
+              {meat.name}
+            </label>
+          );
+        })}
+      </fieldset>
+      <fieldset>
+        <legend>Выберите овощи:</legend>
+        {vegetables.map((vegetable) => {
+          return (
+            <label key={vegetable.id}>
+              <input
+                ref={register}
+                type="checkbox"
+                value={vegetable.slug}
+                name="vegetables"
+              />
+              {vegetable.name}
+            </label>
+          );
+        })}
       </fieldset>
       <button>Готово {price}</button>
     </form>

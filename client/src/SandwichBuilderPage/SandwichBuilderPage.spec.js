@@ -21,6 +21,10 @@ describe("SandwichBuilderPage", () => {
           _useSandwichHook={() => ({
             setSandwich: () => {},
           })}
+          _useIngredientsHook={() => ({
+            fetchIngredients: () => {},
+            ingredientsByCategory: () => [],
+          })}
         />
       </MemoryRouter>
     );
@@ -37,6 +41,10 @@ describe("SandwichBuilderPage", () => {
           <SandwichBuilderPage
             _useSandwichHook={() => ({
               setSandwich: mockSetSandwich,
+            })}
+            _useIngredientsHook={() => ({
+              fetchIngredients: () => {},
+              ingredientsByCategory: () => [],
             })}
           />
         </MemoryRouter>
@@ -55,12 +63,16 @@ describe("SandwichBuilderPage", () => {
             _useSandwichHook={() => ({
               setSandwich: () => {},
             })}
+            _useIngredientsHook={() => ({
+              fetchIngredients: () => {},
+              ingredientsByCategory: () => [],
+            })}
           />
         </Router>
       );
       fireEvent.click(getByText("Сохранить"));
 
-      expect(history.location.pathname).toEqual("/sandwich-preview")
+      expect(history.location.pathname).toEqual("/sandwich-preview");
     });
   });
 });

@@ -2,16 +2,20 @@ import React from "react";
 import ReactDOM from "react-dom";
 import "./index.css";
 import { BrowserRouter } from "react-router-dom";
-import { SandwichProvider } from "./SandwichContext"
+import { IngredientsProvider } from "./contexts/IngredientsContext";
 import App from "./App";
+import { Provider } from "react-redux";
+import { store } from "./store";
 
 ReactDOM.render(
   <React.StrictMode>
-    <SandwichProvider>
+    <IngredientsProvider>
       <BrowserRouter>
-        <App />
+        <Provider store={store}>
+          <App />
+        </Provider>
       </BrowserRouter>
-    </SandwichProvider>
+    </IngredientsProvider>
   </React.StrictMode>,
   document.getElementById("root")
 );

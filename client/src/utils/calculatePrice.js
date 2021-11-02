@@ -1,15 +1,11 @@
-import { BREAD, SAUCES, TOPPINGS } from "./sandwichData";
+import { BREAD } from "./sandwichData";
 
-export function calculatePrice({ bread, sauces, toppings }) {
+export function calculatePrice(bread, selectedToppings, toppingsData) {
   const breadPrice = BREAD[bread].price;
-  const saucesPrice = sauces.reduce(
-    (price, sauce) => price + SAUCES[sauce].price,
-    0
-  );
-  const toppingsPrice = toppings.reduce(
-    (price, topping) => price + TOPPINGS[topping].price,
-    0
-  );
+  const toppingsPrice = selectedToppings.reduce((price, topping) => {
+    const toppingData = toppingsData.find(t => t.slug === topping)
+    return price + toppingData.price;
+  }, 0);
 
-  return breadPrice + saucesPrice + toppingsPrice;
+  return breadPrice + toppingsPrice;
 }

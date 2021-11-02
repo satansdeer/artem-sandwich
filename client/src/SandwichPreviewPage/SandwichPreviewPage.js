@@ -1,9 +1,10 @@
 import { Link, Redirect } from "react-router-dom";
-import { useSandwich } from "../SandwichContext";
 import { SandwichPreview } from "./SandwichPreview";
+import { useSelector } from 'react-redux'
+import { getSandwich } from "../state/sandwich/selectors";
 
 export const SandwichPreviewPage = () => {
-  const { sandwich } = useSandwich();
+  const sandwich = useSelector(getSandwich)
 
   if (!sandwich) {
     return <Redirect to="/" />;

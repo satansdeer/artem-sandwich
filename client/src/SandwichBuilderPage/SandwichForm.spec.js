@@ -1,4 +1,5 @@
 import { fireEvent, render } from "@testing-library/react";
+import { act } from "react-dom/test-utils";
 import { SandwichForm } from "./SandwichForm";
 
 describe("SandwichForm", () => {
@@ -32,7 +33,7 @@ describe("SandwichForm", () => {
   });
 
   describe("on sandwich submit", () => {
-    it("passes constructed sandwich", () => {
+    it("passes constructed sandwich", async () => {
       const onSandwichSubmit = jest.fn();
       const { getByText } = render(
         <SandwichForm onSandwichSubmit={onSandwichSubmit} />
@@ -41,7 +42,9 @@ describe("SandwichForm", () => {
       fireEvent.click(getByText("майонез"));
       fireEvent.click(getByText("сыр чеддер"));
 
-      fireEvent.click(getByText("Готово 39"));
+      await act(async () => {
+        fireEvent.click(getByText("Готово 39"));
+      })
 
       expect(onSandwichSubmit).toBeCalledWith({
         bread: "dark",

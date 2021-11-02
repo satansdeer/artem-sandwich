@@ -1,68 +1,44 @@
 import React from 'react'
 import { useState } from "react";
+import { useForm } from 'react-hook-form';
 import { calculatePrice } from "../utils/calculatePrice";
 import { BREAD, SAUCES, TOPPINGS } from "../utils/sandwichData";
-import { useCollection } from "../utils/useCollection";
 
 export const SandwichForm = ({ onSandwichSubmit }) => {
-  const [bread, setBread] = useState("dark");
-  const [sauces, addSauce, removeSauce] = useCollection([]);
-  const [toppings, addTopping, removeTopping] = useCollection([]);
-
-  const price = calculatePrice({ bread, sauces, toppings });
-
-  const updateBread = (event) => {
-    setBread(event.target.value);
-  };
-
-  const updateSauces = (event) => {
-    const { checked, value } = event.target;
-    if (checked) {
-      addSauce(value);
-    } else {
-      removeSauce(value);
+  const {register, handleSubmit, watch} = useForm({
+    defaultValues: {
+      bread: 'dark',
+      sauces: [],
+      toppings: []
     }
-  };
+  })
 
-  const updateToppings = (event) => {
-    const { checked, value } = event.target;
-    if (checked) {
-      addTopping(value);
-    } else {
-      removeTopping(value);
-    }
-  };
+  const values = watch()
+  const price = calculatePrice(values);
 
-  const handleSubmit = (event) => {
-    event.preventDefault();
-    onSandwichSubmit({
-      bread,
-      sauces,
-      toppings,
-    });
+  const onSubmit = (data) => {
+    onSandwichSubmit(data);
   };
 
   return (
-    <form onSubmit={handleSubmit}>
+    <form onSubmit={handleSubmit(onSubmit)}>
       <fieldset>
         <legend>Выберите хлеб:</legend>
         <label>
           <input
+            ref={register}
             type="radio"
             value="dark"
             name="bread"
-            checked={bread === "dark"}
-            onChange={updateBread}
           />
           {BREAD.dark.name}
         </label>
         <label>
           <input
+            ref={register}
             type="radio"
             value="white"
             name="bread"
-            checked={bread === "white"}
-            onChange={updateBread}
           />
           {BREAD.white.name}
         </label>
@@ -71,31 +47,28 @@ export const SandwichForm = ({ onSandwichSubmit }) => {
         <legend>Выберите соусы:</legend>
         <label>
           <input
+            ref={register}
             type="checkbox"
             value="mayo"
-            name="sauce"
-            checked={sauces.includes("mayo")}
-            onChange={updateSauces}
+            name="sauces"
           />
           {SAUCES.mayo.name}
         </label>
         <label>
           <input
+            ref={register}
             type="checkbox"
             value="ketchup"
-            name="sauce"
-            checked={sauces.includes("ketchup")}
-            onChange={updateSauces}
+            name="sauces"
           />
           {SAUCES.ketchup.name}
         </label>
         <label>
           <input
+            ref={register}
             type="checkbox"
             value="mustard"
-            name="sauce"
-            checked={sauces.includes("mustard")}
-            onChange={updateSauces}
+            name="sauces"
           />
           {SAUCES.mustard.name}
         </label>
@@ -104,31 +77,28 @@ export const SandwichForm = ({ onSandwichSubmit }) => {
         <legend>Выберите топпинги:</legend>
         <label>
           <input
+            ref={register}
             type="checkbox"
             value="bacon"
             name="toppings"
-            checked={toppings.includes("bacon")}
-            onChange={updateToppings}
           />
           {TOPPINGS.bacon.name}
         </label>
         <label>
           <input
+            ref={register}
             type="checkbox"
             value="lettuce"
             name="toppings"
-            checked={toppings.includes("lettuce")}
-            onChange={updateToppings}
           />
           {TOPPINGS.lettuce.name}
         </label>
         <label>
           <input
+            ref={register}
             type="checkbox"
             value="cheddar"
             name="toppings"
-            checked={toppings.includes("cheddar")}
-            onChange={updateToppings}
           />
           {TOPPINGS.cheddar.name}
         </label>
